@@ -39,3 +39,105 @@ Andere Beispiele für Vokabulare sind folgende:
 * Friend of a Friend (FOAF) http://xmlns.com/foaf/spec/ - Kann für soziale Netze verwendet werden.
 * schema.org https://schema.org/ - Wird bei Webseiten verwendet, damit Suchmaschinen den Inhalt der Seite verstehen können.
 * Dublin Core https://www.w3.org/wiki/DublinCore - Wird für die Beschreibung elektronischer Ressourcen verwendet.
+
+## RDF Graphen
+Wenn man eine Menge an Tripeln hat, kann man diese in einem gerichteten Graph speichern und auch darstellen.  
+Für die Serialisierung dieser Graphen werden diverse Technologien von W3C definiert:
+
+* Turtle
+* RDF/XML
+* RDF/JSON
+* etc.
+
+Zum Verständnis erfolgt nun eine simple Implementierung eines RDF Graphen mit Hilfe von dotNetRDF anschließend wird dieser serialisiert.  
+Der folgende Code erstellt einen Graphen bestehend aus 2 Tripeln, die Informationen über den Mount Everset enthalten, und gibt den Graphen in Form einer Turtle Serialisierung aus.
+```c#
+using System;
+using VDS.RDF;
+using VDS.RDF.Writing;
+
+namespace RDFExamples
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            // Erstellen des Graphen
+            IGraph graph = new Graph();
+            graph.BaseUri = new Uri("http://example.org/mountainGraph");
+
+            // Erstellen eines Triples der Form <Mount Everest> <hasHeight> <8849 m>
+            IUriNode mountEverest = graph.CreateUriNode(UriFactory.Create("http://example.org/mountains/Mount_Everest"));
+            IUriNode hasHeight = graph.CreateUriNode(UriFactory.Create("http://example.org/hasHeight"));
+            ILiteralNode height = graph.CreateLiteralNode("8849 m");
+
+            // Einfügen des Triples 
+            graph.Assert(new Triple(mountEverest, hasHeight, height));
+
+            // Erstellen und Einfügen eines Tripels der Form <Mount Everest> <isA> <Mountain>
+            IUriNode isA = graph.CreateUriNode(UriFactory.Create("http://example.org/isA"));
+            IUriNode mountain = graph.CreateUriNode(UriFactory.Create("http://example.org/mountain"));
+
+            graph.Assert(new Triple(mountEverest, isA, mountain));
+
+            // Serialisieren des Graphen in Turtle
+            TurtleWriter turtlewriter = new TurtleWriter();
+            System.IO.StringWriter stringwriter = new System.IO.StringWriter();
+
+            turtlewriter.Save(graph, stringwriter);
+
+            String data = stringwriter.ToString();
+            Console.WriteLine(data);
+        }
+    }
+}
+```
+Die dabei erstellte Turtle-Serialisieren sieht folgendermaßen aus:
+
+```turtle
+@base <http://example.org/mountainGraph>.
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+
+<http://example.org/mountains/Mount_Everest> <http://example.org/hasHeight> "8849 m";
+                                             <http://example.org/isA> <http://example.org/mountain>.
+```
+Der selbe Graph kann nun auch in anderen Darstellungsformen serialisiert werden. In RDF/XML sieht er so aus:
+
+```XML
+<?xml version="1.0" encoding="utf-16"?>
+<!DOCTYPE rdf:RDF [
+        <!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+        <!ENTITY rdfs 'http://www.w3.org/2000/01/rdf-schema#'>
+        <!ENTITY xsd 'http://www.w3.org/2001/XMLSchema#'>
+]>
+<rdf:RDF xml:base="http://example.org/mountainGraph" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <rdf:Description rdf:about="http://example.org/mountains/Mount_Everest">
+    <ns0:hasHeight xmlns:ns0="http://example.org/">8849 m</ns0:hasHeight>
+    <ns1:isA rdf:resource="http://example.org/mountain" xmlns:ns1="http://example.org/" />
+  </rdf:Description>
+</rdf:RDF>
+```
+
+In JSON sieht der Graph nun so aus:
+```JSON
+{
+  "http://example.org/mountains/Mount_Everest": {
+    "http://example.org/hasHeight": [
+      {
+        "value": "8849 m",
+        "type": "literal"
+      }
+    ],
+    "http://example.org/isA": [
+      {
+        "value": "http://example.org/mountain",
+        "type": "uri"
+      }
+    ]
+  }
+}
+```
+Es werden noch andere Darstellungsformen in dotNetRDF unterstützt, diese werden aber hier nicht mehr angeführt.
