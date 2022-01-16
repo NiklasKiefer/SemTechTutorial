@@ -1,6 +1,6 @@
 # RDF
 ### Author: Niklas Kiefer
-Als Referenz für diese Zusammenfassung dient W3C: https://www.w3.org/RDF/  und https://www.w3.org/TR/rdf11-primer/#bib-RDF11-MT
+Als Referenz für diese Zusammenfassung dient die [W3C Dokumentation](https://www.w3.org/RDF/)  und [RDF Primer](https://www.w3.org/TR/rdf11-primer/#bib-RDF11-MT)
   
 RDF steht für *Resource Description Framework* und ist ein Framework, welches vom World Wide Web Consortium **W3C** entwickelt wurde, um Informationen über verschiedenste Ressourcen zu sammeln und zu standardisieren. Als Ressource kann hierbei alles mögliche dienen, wie zum Beispiel Personen, Gegenstände, Gebäude, abstrakte Konzepte und vieles mehr. RDF bildet den Grundstein des Semantic Web und dient dazu, mit einer einheitlichen Schreibweise Informationen einfacher von Maschinen verwertbar zu machen, ohne dabei einen Verlust an Informationen zu erhalten.
 
@@ -12,7 +12,76 @@ Um die Informationen dann zu vernetzen und zu standardisieren wird eine besonder
 * **Prädikat** - stellt Subjekt in Relation zu Objekt (kann IRI sein)
 * **Objekt** - stellt ein Objekt dar, dass in Relation zur Ressource gestellt wird. Kann ebenfalls eine Ressource sein (kann IRI, Literal oder blank node sein)
 
-Ein Beispiel für ein Triple wäre folgendes: ***(Mount Everest) (isA) (Mountain)***
+Es folgt nun ein Beispiel für Triples programmiert in C# mit dotNetRDF. Dieses Beispiel wird im [RDF Primer](https://www.w3.org/TR/rdf11-primer/#section-triple) ebenfalls dargestellt.
+
+```C#
+using System;
+using VDS.RDF;
+using VDS.RDF.Writing;
+
+namespace RDFExamples
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            IGraph graph = new Graph();
+
+            // Triple <Bob> <is a> <person>
+            IUriNode Subject = graph.CreateUriNode(UriFactory.Create("http://example.org/Bob"));
+            IUriNode Predicate = graph.CreateUriNode(UriFactory.Create("http://example.org/isA"));
+            IUriNode Object = graph.CreateUriNode(UriFactory.Create("http://example.org/person"));
+            graph.Assert(new Triple(Subject, Predicate, Object));
+
+            // Triple <Bob> <is a friend of> <Alice>
+            Subject = graph.CreateUriNode(UriFactory.Create("http://example.org/Bob"));
+            Predicate = graph.CreateUriNode(UriFactory.Create("http://example.org/isAFriendOf"));
+            Object = graph.CreateUriNode(UriFactory.Create("http://example.org/Alice"));
+            graph.Assert(new Triple(Subject, Predicate, Object));
+
+            // Triple <Bob> <is born on> <the 4th of July 1990>. 
+            Subject = graph.CreateUriNode(UriFactory.Create("http://example.org/Bob"));
+            Predicate = graph.CreateUriNode(UriFactory.Create("http://example.org/isBornOn"));
+            Object = graph.CreateUriNode(UriFactory.Create("http://example.org/The4thOfJuly1990"));
+            graph.Assert(new Triple(Subject, Predicate, Object));
+
+            // Triple <Bob> <is interested in> <the Mona Lisa>.
+            Subject = graph.CreateUriNode(UriFactory.Create("http://example.org/Bob"));
+            Predicate = graph.CreateUriNode(UriFactory.Create("http://example.org/isInterestedIn"));
+            Object = graph.CreateUriNode(UriFactory.Create("http://example.org/theMonaLisa"));
+            graph.Assert(new Triple(Subject, Predicate, Object));
+
+            // Triple <the Mona Lisa> <was created by> <Leonardo da Vinci>.
+            Subject = graph.CreateUriNode(UriFactory.Create("http://example.org/theMonaLisa"));
+            Predicate = graph.CreateUriNode(UriFactory.Create("http://example.org/wasCreatedBy"));
+            Object = graph.CreateUriNode(UriFactory.Create("http://example.org/LeonardoDaVinci"));
+            graph.Assert(new Triple(Subject, Predicate, Object));
+
+            // Triple <the video 'La Joconde à Washington'> <is about> <the Mona Lisa>
+            Subject = graph.CreateUriNode(UriFactory.Create("http://example.org/video/LaJocondeÀWashington"));
+            Predicate = graph.CreateUriNode(UriFactory.Create("http://example.org/isAbout"));
+            Object = graph.CreateUriNode(UriFactory.Create("http://exampe.org/TheMonaLisa"));
+            graph.Assert(new Triple(Subject, Predicate, Object));
+
+            // Ausgeben des Triples in der Konsole
+            foreach (Triple t in graph.Triples)
+            {
+                Console.WriteLine(t.ToString());
+            }
+        }
+    }
+}
+```
+Der daraus entstehende Output folgende Triples:
+```
+http://example.org/Bob , http://example.org/isA , http://example.org/person
+http://example.org/Bob , http://example.org/isAFriendOf , http://example.org/Alice
+http://example.org/Bob , http://example.org/isBornOn , http://example.org/The4thOfJuly1990
+http://example.org/Bob , http://example.org/isInterestedIn , http://example.org/theMonaLisa
+http://example.org/theMonaLisa , http://example.org/wasCreatedBy , http://example.org/LeonardoDaVinci
+http://example.org/video/LaJoconde%C3%80Washington , http://example.org/isAbout , http://exampe.org/TheMonaLisa
+```
+
 
 Die entstehende Information aus den Triples stellt einen gerichteten Graphen dar. Durch diese Struktur kann es außerdem ermöglicht werden, Zusammenhänge zwischen verschiedenen Triples zu erkennen. Die Daten innerhalb des Triples kann eine von 3 verschiedenen Typen sein:
 
