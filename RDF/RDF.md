@@ -1,6 +1,6 @@
 # RDF
 ### Author: Niklas Kiefer
-Als Referenz für diese Zusammenfassung dient W3C: https://www.w3.org/RDF/  
+Als Referenz für diese Zusammenfassung dient W3C: https://www.w3.org/RDF/  und https://www.w3.org/TR/rdf11-primer/#bib-RDF11-MT
   
 RDF steht für *Resource Description Framework* und ist ein Framework, welches vom World Wide Web Consortium **W3C** entwickelt wurde, um Informationen über verschiedenste Ressourcen zu sammeln und zu standardisieren. Als Ressource kann hierbei alles mögliche dienen, wie zum Beispiel Personen, Gegenstände, Gebäude, abstrakte Konzepte und vieles mehr. RDF bildet den Grundstein des Semantic Web und dient dazu, mit einer einheitlichen Schreibweise Informationen einfacher von Maschinen verwertbar zu machen, ohne dabei einen Verlust an Informationen zu erhalten.
 
