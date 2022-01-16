@@ -33,3 +33,9 @@ Als ein Vokabular in RDF wird eine Sammlung an IRIs bezeichnet, welche in RDF Gr
 | Comment       | R rdfs:comment L        | Eine Ressource R erhält ein Literal L als Beschreibung für den Menschen |
 
 Die Tabelle zeigt nur einen kleinen Teil von RDF Schema. Weitere Datentypen können hier nachgelesen werden: https://www.w3.org/TR/2014/REC-rdf-schema-20140225/  
+
+Andere Beispiele für Vokabulare sind folgende:
+
+** Friend of a Friend (FOAF) http://xmlns.com/foaf/spec/ - Kann für soziale Netze verwendet werden.
+** schema.org - Wird bei Webseiten verwendet, damit Suchmaschinen den Inhalt der Seite verstehen können.
+** Dublin Core
