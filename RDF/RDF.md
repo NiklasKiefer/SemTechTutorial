@@ -271,7 +271,7 @@ SPARQL, wie auf [W3C](https://www.w3.org/TR/sparql11-overview/) definiert, ist e
 Im folgenden wird ein Beispiel Graph erstellt und mit SPARQL abgefragt, um die Syntax zu zeigen. Der Code kommt von der [SPARQL Definition](https://www.w3.org/TR/sparql11-overview/#sparql11-query) auf w3c.org  
   
 Zuerst benötigen wir einen Graphen. Der Beispielgraph stellt eine Gruppe von Menschen dar, die sich kennen. Hierfür wird das [FOAF Vokabular](http://xmlns.com/foaf/spec/) verwendet.
-```foaf
+```
  @prefix foaf: <http://xmlns.com/foaf/0.1/> .
  @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
@@ -287,7 +287,7 @@ Zuerst benötigen wir einen Graphen. Der Beispielgraph stellt eine Gruppe von Me
  <http://example.org/alice#me> foaf:knows <http://example.org/snoopy> .
  <http://example.org/snoopy> foaf:name "Snoopy"@en .
 ```
-Nun können wir mit SPARQL diesen Graphen abgragen. Der folgende Ausdruck liefert den Namen aller Personen und die Anzahl derer Freunde.
+Nun können wir mit SPARQL diesen Graphen abgragen. Die folgende Abgrage liefert die Namen aller Personen und die Anzahl der Freunde von der jeweiligen Person.
 ```SPARQL
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 SELECT ?name (COUNT(?friend) AS ?count)
@@ -296,3 +296,72 @@ WHERE {
     ?person foaf:knows ?friend . 
 } GROUP BY ?person ?name
 ```
+
+Zur Demonstration folgt nun noch die Implementierung der gerade genannten SPARQL Abfrage in C# mit dotNetRDF:
+```C#
+using System;
+using VDS.RDF;
+using VDS.RDF.Parsing;
+using VDS.RDF.Query;
+using VDS.RDF.Writing;
+
+namespace RDFExamples
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            IGraph graph = new Graph();
+
+            // Erstellen des Graphen aus einem String (alternativ kann auch aus einer Datei gelesen werden)
+            string data = "@prefix foaf: <http://xmlns.com/foaf/0.1/> . \n"
+                        + "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n\n"
+                        + "<http://example.org/alice#me> a foaf:Person .\n"
+                        + "<http://example.org/alice#me> foaf:name \"Alice\" .\n"
+                        + "<http://example.org/alice#me> foaf:mbox <mailto:alice@example.org> .\n"
+                        + "<http://example.org/alice#me> foaf:knows <http://example.org/bob#me> .\n"
+                        + "<http://example.org/bob#me> foaf:knows <http://example.org/alice#me> .\n"
+                        + "<http://example.org/bob#me> foaf:name \"Bob\" .\n"
+                        + "<http://example.org/alice#me> foaf:knows <http://example.org/charlie#me> .\n"
+                        + "<http://example.org/charlie#me> foaf:knows <http://example.org/alice#me> .\n"
+                        + "<http://example.org/charlie#me> foaf:name \"Charlie\" .\n"
+                        + "<http://example.org/alice#me> foaf:knows <http://example.org/snoopy> .\n"
+                        + "<http://example.org/snoopy> foaf:name \"Snoopy\"@en .";
+
+            // Parsen des Strings in den Graphen.
+            StringParser.Parse(graph, data);
+
+            // Erstellen des SPARQL Ausdrucks als String.
+            string query = @"PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+                            SELECT ?name(COUNT(?friend) AS ?count)
+                            WHERE {
+                                ?person foaf:name ?name .
+                                ?person foaf:knows ?friend .
+                            }
+                            GROUP BY ?person ?name";
+
+
+            // Ausführen der Abfrage
+            var results = graph.ExecuteQuery(query);
+
+            // Auswerten des Ergebnisses (Typ des Results muss überprüft werden)
+            if (results is SparqlResultSet)
+            {
+                SparqlResultSet rset = (SparqlResultSet)results;
+                foreach (SparqlResult result in rset)
+                {
+                    Console.WriteLine(result.ToString());
+                }
+            }
+        }
+    }
+}
+```
+Wenn man nun diese Abfrage ausführt, erhält man folgendes Ergebnis:
+
+```
+?name = Alice , ?count = 3^^http://www.w3.org/2001/XMLSchema#integer
+?name = Charlie , ?count = 1^^http://www.w3.org/2001/XMLSchema#integer
+?name = Bob , ?count = 1^^http://www.w3.org/2001/XMLSchema#integer
+```
+Im Ergebnis kann man nun erkennen, dass Alice 3 Freunde hat, und sowohl Charlie als auch Bob einen Freund hat.
