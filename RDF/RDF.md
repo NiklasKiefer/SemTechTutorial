@@ -36,6 +36,6 @@ Die Tabelle zeigt nur einen kleinen Teil von RDF Schema. Weitere Datentypen kön
 
 Andere Beispiele für Vokabulare sind folgende:
 
-** Friend of a Friend (FOAF) http://xmlns.com/foaf/spec/ - Kann für soziale Netze verwendet werden.
-** schema.org - Wird bei Webseiten verwendet, damit Suchmaschinen den Inhalt der Seite verstehen können.
-** Dublin Core
+* Friend of a Friend (FOAF) http://xmlns.com/foaf/spec/ - Kann für soziale Netze verwendet werden.
+* schema.org https://schema.org/ - Wird bei Webseiten verwendet, damit Suchmaschinen den Inhalt der Seite verstehen können.
+* Dublin Core https://www.w3.org/wiki/DublinCore - Wird für die Beschreibung elektronischer Ressourcen verwendet.
