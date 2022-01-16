@@ -265,3 +265,34 @@ In HTML sieht der Graph so aus:
 </html>
 ```
 Es werden noch andere Darstellungsformen in dotNetRDF unterstützt, diese werden aber hier nicht mehr angeführt.
+
+## SPARQL
+SPARQL, wie auf [W3C](https://www.w3.org/TR/sparql11-overview/) definiert, ist eine Abfragesprache ähnlich wie SQL, mit der RDF Graphen nach Daten abgefragt werden können.
+Im folgenden wird ein Beispiel Graph erstellt und mit SPARQL abgefragt, um die Syntax zu zeigen. Der Code kommt von der [SPARQL Definition](https://www.w3.org/TR/sparql11-overview/#sparql11-query) auf w3c.org  
+  
+Zuerst benötigen wir einen Graphen. Der Beispielgraph stellt eine Gruppe von Menschen dar, die sich kennen. Hierfür wird das [FOAF Vokabular](http://xmlns.com/foaf/spec/) verwendet.
+```foaf
+ @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+ @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+ <http://example.org/alice#me> a foaf:Person .
+ <http://example.org/alice#me> foaf:name "Alice" .
+ <http://example.org/alice#me> foaf:mbox <mailto:alice@example.org> .
+ <http://example.org/alice#me> foaf:knows <http://example.org/bob#me> .
+ <http://example.org/bob#me> foaf:knows <http://example.org/alice#me> .
+ <http://example.org/bob#me> foaf:name "Bob" .
+ <http://example.org/alice#me> foaf:knows <http://example.org/charlie#me> .
+ <http://example.org/charlie#me> foaf:knows <http://example.org/alice#me> .
+ <http://example.org/charlie#me> foaf:name "Charlie" .
+ <http://example.org/alice#me> foaf:knows <http://example.org/snoopy> .
+ <http://example.org/snoopy> foaf:name "Snoopy"@en .
+```
+Nun können wir mit SPARQL diesen Graphen abgragen. Der folgende Ausdruck liefert den Namen aller Personen und die Anzahl derer Freunde.
+```SPARQL
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+SELECT ?name (COUNT(?friend) AS ?count)
+WHERE { 
+    ?person foaf:name ?name . 
+    ?person foaf:knows ?friend . 
+} GROUP BY ?person ?name
+```
