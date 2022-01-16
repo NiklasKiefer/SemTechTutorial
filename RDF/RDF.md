@@ -42,12 +42,13 @@ Andere Beispiele für Vokabulare sind folgende:
 
 ## RDF Graphen
 Wenn man eine Menge an Tripeln hat, kann man diese in einem gerichteten Graph speichern und auch darstellen.  
-Für die Serialisierung dieser Graphen werden diverse Technologien von W3C definiert:
+Für die Serialisierung dieser Graphen werden diverse Technologien von W3C im RDF Primer definiert:
 
 * Turtle
-* RDF/XML
-* RDF/JSON
-* etc.
+* JSON-LD - JSON basiert
+* RDFa - HTML basiert
+* N-Triples
+* RDF/XML - XML basiert
 
 Zum Verständnis erfolgt nun eine simple Implementierung eines RDF Graphen mit Hilfe von dotNetRDF anschließend wird dieser serialisiert.  
 Der folgende Code erstellt einen Graphen bestehend aus 2 Tripeln, die Informationen über den Mount Everset enthalten, und gibt den Graphen in Form einer Turtle Serialisierung aus.
@@ -139,5 +140,59 @@ In JSON sieht der Graph nun so aus:
     ]
   }
 }
+```
+In HTML sieht der Graph so aus:
+```HTML
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd">
+<html>
+        <head>
+                <title>
+                        RDF Graph - http://example.org/mountainGraph</title>
+        </head>
+        <body>
+                <h3>
+                        RDF Graph - http://example.org/mountainGraph</h3>
+                <table width="100%">
+                        <thead>
+                                <tr>
+                                        <th>
+                                                Subject</th>
+                                        <th>
+                                                Predicate</th>
+                                        <th>
+                                                Object</th>
+
+                                </tr>
+
+                        </thead>
+                        <tbody>
+                                <tr valign="top">
+                                        <td rowspan="2">
+
+                                                <a class="uri" href="http://example.org/mountains/Mount_Everest">
+                                                        http://example.org/mountains/Mount_Everest</a>
+                                        </td>
+                                        <td rowspan="1">
+                                                <a class="uri" href="http://example.org/hasHeight">
+                                                        http://example.org/hasHeight</a>
+                                        </td>
+                                        <td>
+                                                <span about="http://example.org/mountains/Mount_Everest" xmlns:ns0="http://example.org/" property="ns0:hasHeight" class="literal">8849 m</span>
+                                        </td>
+                                </tr>
+                                <tr valign="top">
+                                        <td rowspan="1">
+                                                <a class="uri" href="http://example.org/isA">
+                                                        ns0:isA</a>
+                                        </td>
+                                        <td>
+                                                <a about="http://example.org/mountains/Mount_Everest" xmlns:ns0="http://example.org/" rel="ns0:isA" class="uri" href="http://example.org/mountain">
+                                                        ns0:mountain</a>
+                                        </td>
+                                </tr>
+                        </tbody>
+                </table>
+        </body>
+</html>
 ```
 Es werden noch andere Darstellungsformen in dotNetRDF unterstützt, diese werden aber hier nicht mehr angeführt.
