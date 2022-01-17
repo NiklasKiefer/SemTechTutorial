@@ -1,12 +1,42 @@
 # XML
 ## Author: Christoph Hofer
 ### Übersicht
-XML (**E**xtensible **M**arkup **L**anguage) ist eine genormte, erweiterbare Auszeichnungssprache um hierarchisch unterteile Strukturen in Form von Text sowohl Menschen als auch Maschinen lesbar zu machen. Sie wurde vom **World Wide Web Consortium** am 10. Februar 1998 veröffentlicht. Ein XML Dokument ist ein *self-describing document*, d.h der Inhalt des Dokuments dient nur dazu, dem Leser zu beschreiben was der Inhalt ist. XML ist keine Programmiersprache oder ähnliches, der alleinige Zweck ist es, Daten strukturiert und anschaulich zu beschreiben / darzustellen.
+XML (**E**xtensible **M**arkup **L**anguage) ist eine genormte, erweiterbare Auszeichnungssprache um hierarchisch unterteile Strukturen in Form von Text sowohl Menschen als auch Maschinen lesbar zu machen. Sie wurde vom **World Wide Web Consortium** am 10. Februar 1998 veröffentlicht. Ein XML Dokument ist ein *self-describing document*, d.h der Inhalt des Dokuments dient nur dazu, dem Leser zu beschreiben was der Inhalt ist. XML ist keine Programmiersprache oder ähnliches, der alleinige Zweck ist es, Daten strukturiert und anschaulich zu beschreiben / darzustellen. XML ist erweiterbar - daher ***Extendable***.
 
 ### Aufbau
-XML verwendet Tags. Ein Tag muss immer geöffnet und danach auch wieder geschlossen werden (Starttag, EndTag). Zwischen den Tags kann man nun den Wert für den jeweiligen Tag angeben. Um eine hierarchische Struktur zu erzeugen, kann man Tags innerhalb von Tags eingeben. 
+XML verwendet Tags. Ein Tag muss immer geöffnet und danach auch wieder geschlossen werden (Starttag, EndTag). Der Name des Tags, ist bis auf ein paar Ausnahmen, frei wählbar. Sehr empfehlenswert ist es aber, Namen zu wählen die auch zum Inhalt passen bzw. den Inhalt beschreiben. Zwischen den Tags kann man nun den Wert für den jeweiligen Tag angeben. Um eine hierarchische Struktur zu erzeugen, kann man Tags innerhalb von Tags eingeben. 
 
-![xml1](https://user-images.githubusercontent.com/91307869/149670309-58b5b4a0-74d6-4e12-aede-2a914c03bbdb.png)
+```XML
+<person>
+  <vorname>Christoph</vorname>
+  <nachname>Hofer</nachname>
+</person>
+```
+
+
+```XML
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<bookstore>
+  <book category="cooking">
+    <title lang="en">Everyday Italian</title>
+    <author>Giada De Laurentiis</author>
+    <year>2005</year>
+    <price>30.00</price>
+  </book>
+  <book category="children">
+    <title lang="en">Harry Potter</title>
+    <author>J K. Rowling</author>
+    <year>2005</year>
+    <price>29.99</price>
+  </book>
+  <book category="web">
+    <title lang="en">Learning XML</title>
+    <author>Erik T. Ray</author>
+    <year>2003</year>
+    <price>39.95</price>
+  </book>
+</bookstore>
+```
 
 #### Das Dokument als Graph:
 
@@ -16,6 +46,7 @@ Es lässt sich also erkennen, dass die Struktur / Syntax von XML auch für den M
 
 ### XML im Web Layer Cake
 
+XML wird benutzt um Beziehungen und Strukturen darzustellen. Eine Semantik bekommt die Struktur aber erst mittels [RDF](https://www.google.com). Vorteil ist es, eigene Tags zu definieren.
 XML wird im Semantischen Web als standardisierte Syntax verwendet. Also dass innerhalb des Webs nur XML als Syntax verwendet wird. XML wird für den Datenaustausch zwischen Maschinen verwendet. Für den Fall, dass 2 verschiedene Domains für Elemente denselben Namen verwenden, lassen sich per XML Namespaces die einzelnen Elemente direkt ansprechen.  
 
 
