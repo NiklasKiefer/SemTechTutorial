@@ -67,5 +67,18 @@ Darauf aufbauend können nun komplexe Ontologien gebildet werden, welche aus div
 Um nun Informationen aus den Ontologien zu gewinnen, benötigt man die sogenannte Inferenz.
 
 ## Inferenz 
-Der Begriff der Inferenz steht das explizit machen von verborgenen Informationen. Sie wird in einer Ontologie verwendet um Schlussfolgerungen aus bestehenden Daten zu ziehen.
+Der Begriff der [Inferenz](https://www.w3.org/standards/semanticweb/inference) steht das explizit machen von verborgenen Informationen. Sie wird in einer Ontologie verwendet um Schlussfolgerungen aus bestehenden Daten zu ziehen. Inferenz funktioniert durch die Angabe von Klassen und zusätzlich noch durch die Angabe von Eigenschaften bzw. einem Regelset.
+
+Als ein kurzes Beispiel zum Verständnis folgt nun ein simples Beispiel von Regeln, durch die mit Inferenz neues Wissen erhalten werden kann. 
+Man stelle sich folgende Regel vor:
+```
+Laika isA Dog
+```
+Dies bedeutet, dass es einen Hund gibt, der Laika heißt. Angenommen, man hat nun eine Regel die besagt, dass alle Hunde Kosmonauten sind, kann nun daraus folgendes geschlossen werden:
+```
+Laika isA Cosmonaut
+```
+Also durch die Tatsache, dass Laika ein Hund ist und alle Hunde als Kosmonauten definiert werden, konnte nun heruasgefunden werden, dass Laika ein Kosmonaut ist.  
+Dies ist natürlich nur ein vereinfachtes Beispiel, welches aber das Prinzip hinter der Inferenz verdeutlichen sollte.
+
 ## Semantic Reasoner
