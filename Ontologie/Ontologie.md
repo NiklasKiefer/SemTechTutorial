@@ -35,7 +35,7 @@ Für die Darstellung von OWL gibt es mehrere Syntaxen:
 
 Für folgende Beispiele wird die RDF/XML Syntax verwendet. Andere Syntaxen werden in diesem Tutorial nicht weiter erläutert.  
 Zuerst folgt nun die Erstellung einer neuen Ontologie:
-```
+```xml
 <?xml version="1.0"?>
 <rdf:RDF xmlns="http://www.semanticweb.org/TestOntologie"
      xml:base="http://www.semanticweb.org/TestOntologie"
@@ -47,8 +47,24 @@ Zuerst folgt nun die Erstellung einer neuen Ontologie:
     <owl:Ontology rdf:about="http://www.semanticweb.org/TestOntologie"/>
     ...
 </rdf:RDF>
-
 ```
+Nun können Klassen in diese Ontologie hinzugefügt werden. Beispielsweise kann man Personen mit verschiedenen Geschlechtern hinzufügen:
+```xml
+  <owl:Class rdf:about="http://www.semanticweb.org/TestOntologie#Person"/>
+
+  <owl:Class rdf:about="http://www.semanticweb.org/TestOntologie#Male">
+    <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/TestOntologie#Person" />
+    <owl:disjointWith rdf:resource="http://www.semanticweb.org/TestOntologie#Female" />
+  </owl:Class>
+
+  <owl:Class rdf:about="http://www.semanticweb.org/TestOntologie#Female">
+      <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/TestOntologie#Person" />
+      <owl:disjointWith rdf:resource="http://www.semanticweb.org/TestOntologie#Male" />
+  </owl:Class>
+```
+Diese Ontologie zeigt nun die Klasse Person und deren Subklassen Male und Female. Diese Klassen sind unterschiedlich, wie man am *ow:disjointWith* erkennen kann.
+Darauf aufbauend können nun komplexe Ontologien gebildet werden, welche aus diversen Klassen und Properties bestehen.  
+Um nun Informationen aus den Ontologien zu gewinnen, benötigt man die sogenannte Inferenz.
 
 ## Inferenz 
 Der Begriff der Inferenz steht das explizit machen von verborgenen Informationen. Sie wird in einer Ontologie verwendet um Schlussfolgerungen aus bestehenden Daten zu ziehen.
