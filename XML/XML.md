@@ -7,14 +7,6 @@ XML (**E**xtensible **M**arkup **L**anguage) ist eine genormte, erweiterbare Aus
 XML verwendet Tags. Ein Tag muss immer geöffnet und danach auch wieder geschlossen werden (Starttag, EndTag). Der Name des Tags, ist bis auf ein paar Ausnahmen, frei wählbar. Sehr empfehlenswert ist es aber, Namen zu wählen die auch zum Inhalt passen bzw. den Inhalt beschreiben. Zwischen den Tags kann man nun den Wert für den jeweiligen Tag angeben. Um eine hierarchische Struktur zu erzeugen, kann man Tags innerhalb von Tags eingeben. 
 
 ```XML
-<person>
-  <vorname>Christoph</vorname>
-  <nachname>Hofer</nachname>
-</person>
-```
-
-
-```XML
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <bookstore>
   <book category="cooking">
@@ -39,14 +31,13 @@ XML verwendet Tags. Ein Tag muss immer geöffnet und danach auch wieder geschlos
 ```
 
 #### Das Dokument als Graph:
-
-![grasf2](https://user-images.githubusercontent.com/91307869/149670281-e1b85404-8bf9-4ad4-929a-1f7e9e041f73.png)
+![graph1](https://user-images.githubusercontent.com/91307869/150149049-1b024be2-31b1-439d-8b93-e18707daa9a7.png)
 
 Es lässt sich also erkennen, dass die Struktur / Syntax von XML auch für den Menschen leicht zu lesen ist, selbst komplexere Strukturen lassen sich mit der Sprache klar darstellen. 
 
 ### XML im Web Layer Cake
 
 XML wird benutzt um Beziehungen und Strukturen darzustellen. Eine Semantik bekommt die Struktur aber erst mittels [RDF](https://www.google.com). Vorteil ist es, eigene Tags zu definieren.
-XML wird im Semantischen Web als standardisierte Syntax verwendet. Also dass innerhalb des Webs nur XML als Syntax verwendet wird. XML wird für den Datenaustausch zwischen Maschinen verwendet. Für den Fall, dass 2 verschiedene Domains für Elemente denselben Namen verwenden, lassen sich per XML Namespaces die einzelnen Elemente direkt ansprechen.  
+XML wird im Semantischen Web als standardisierte Syntax verwendet, noch dazu wird XML wird für den Datenaustausch zwischen Maschinen verwendet. Für den Fall, dass 2 verschiedene Domains für Elemente denselben Namen verwenden, lassen sich per XML Namespaces die einzelnen Elemente direkt ansprechen.  
 
 
