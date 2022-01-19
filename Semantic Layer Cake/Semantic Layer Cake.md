@@ -15,6 +15,28 @@ Auf dem ersten Blick scheint so etwas überflüssig, aber so ein Web könnte vie
 Dieses Vorgehen ist extrem zeitintensiv und uneffizient und muss für jede neue Website wiederholt werden. Wenn man effektiv soviele Angebote wie möglich von diversen Seiten zusammensuchen möchte, muss das maschinell passieren. Aber wie kann ein
 Computer eine Website selber interpretieren? Eine Lösung wäre es, wenn Entwickler der Seiten die relevante Information in einer Form bereitstellen die standardisiert überall im Web verfügbar ist. Nun kann die Vergleichsplattform von jeder Seite die Angebote herausfiltern, der Computer versteht Zusammenhänge und Informationen. Die jeweiligen Seiten haben semantischen Inhalt, dem Inhalt wurde Ausdruck verliehen, der Computer kann diese lesen und vorallem interpretieren. Das semantic Web kann aber nur funktionieren wenn es einheitlich funktioniert, d.h dass Technologien und Darstellungsformate standardisiert sind. Das semantische Web beruht auf einer Idee von Tim Berners-Lee, dem Begründer des WWW.
 
+### Layers
+
+#### Fundament
+
+Wie bereits angesprochen bilden die unteren Schichten des Layercakes das Fundament des semantischen Webs. 
+
+* UNICODE - Unicode ist ein Standard der festgibt wie Zahlen, Buchstaben und andere Zeichen elektronisch gespeichert werden. Damit sie auf dem Handy, Tablet oder Computer richtig wiedergeben kann. Um Unicode Zeichen in binär Zahlen umzuformen bedient man sich ***Unicode Transformation Format*** (UTF).
+* XML - Eine Auszeichnungssprache um hierarchisch strukturierte Daten zu beschreiben. XML an sich tut nicht viel, ist aber für den Datenaustausch essentiell.
+* URI - Ein Uri (Universal Resource Identifier) ist eine Bezeichnung bzw. ein Identifikator für eine bestimmte Resource im Web. Gebraucht wird dieser im semantischen Web um semantische Inhalte genau zu identifizieren / lokalisieren.
+
+#### Mittelschicht
+
+Die Mittelschicht des Layer Cakes besteht aus Technologien die von der ***W3C*** standardisiert wurden um semantische Inhalte zu generieren.
+
+* RDF - Mittels RDF (Resource Description Framework) lassen sich Inhalte im Web mittels Tripeln verknüpfen und geben dem Inhalt eine Semantik.
+* OWL - Die Web Ontology Language zielt darauf ab, das RDF Framework mit Constraints und ähnlichem zu erweitern.
+* SPARQL - SPARQL wird als Query Language benutzt um Informationen aus RDF Inhalten zu bekommen.
+
+#### Obereste Schicht
+
+* Vertrauen - Um sicherzugehen, dass Inhalte aus dem Web aus einer vertrauenswürdigen Quelle kommen.
+* Menschliches Interface - Eine Schnittstelle, über der es für den User möglich ist, auf das semantische Web zuzugreifen. (Computer, Bildschirm...)
 
 
 
